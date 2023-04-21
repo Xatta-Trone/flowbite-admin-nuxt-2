@@ -92,7 +92,7 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
 import { initFlowbite  } from 'flowbite'
 
 
@@ -101,4 +101,4 @@ export default {
     initFlowbite();
   }
 }
-</script>
+</script> -->
