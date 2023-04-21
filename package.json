@@ -1,0 +1,31 @@
+{
+  "name": "flowbite-admin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:prettier": "prettier --check .",
+    "lint": "npm run lint:prettier",
+    "lintfix": "prettier --write --list-different ."
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "core-js": "^3.19.3",
+    "flowbite": "^1.6.5",
+    "nuxt": "^2.15.8",
+    "vue": "^2.6.14",
+    "vue-server-renderer": "^2.6.14",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^4.46.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "eslint-config-prettier": "^8.3.0",
+    "postcss": "^8.4.23",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^3.3.1"
+  }
+}
