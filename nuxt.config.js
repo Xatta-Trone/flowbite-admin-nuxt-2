@@ -1,6 +1,7 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  components: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -28,13 +29,19 @@ export default {
     {
       src: '~/plugins/mixin.js',
     },
+    {
+      src: '~/plugins/vue-tables-2.js',
+    },
+    {
+      src: '~/plugins/vue-table.js',
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: ['@nuxtjs/google-fonts'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -55,8 +62,18 @@ export default {
         plugins: {
           tailwindcss: {},
           autoprefixer: {},
+          'postcss-import': {},
         },
       },
+    },
+  },
+
+  googleFonts: {
+    prefetch: true,
+    families: {
+      Roboto: true,
+      Lato: true,
+      Raleway: true,
     },
   },
 }
