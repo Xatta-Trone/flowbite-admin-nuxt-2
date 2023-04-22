@@ -33,8 +33,9 @@ export default {
     {
       src: '~/plugins/vue-tables-2.js',
     },
+
     {
-      src: '~/plugins/vue-table.js',
+      src: '~/plugins/toast-notification.js',
     },
   ],
 
@@ -71,9 +72,9 @@ export default {
           autoFetch: true,
         },
         endpoints: {
-          login: { url: '/login', method: 'post' },
-          user: { url: '/me', method: 'get' },
-          logout: { url: '/me', method: 'get' },
+          login: { url: '/admin/login', method: 'post' },
+          user: { url: '/admin/me', method: 'get' },
+          logout: { url: '/admin/logout', method: 'post' },
         },
       },
     },
