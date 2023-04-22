@@ -14,17 +14,26 @@ export default {
   },
   methods: {
     setDark() {
-      if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
+      // if (
+      //   localStorage.theme === 'dark' ||
+      //   (!('theme' in localStorage) &&
+      //     window.matchMedia('(prefers-color-scheme: dark)').matches)
+      // )
+      if (localStorage.theme === 'dark') {
         document.documentElement.classList.add('dark')
-        document.body.classList.add("dark:text-white","dark:bg-gray-800","dark:border-gray-700")
+        document.body.classList.add(
+          'dark:text-white',
+          'dark:bg-gray-800',
+          'dark:border-gray-700'
+        )
         this.isDark = true
       } else {
         document.documentElement.classList.remove('dark')
-        document.body.classList.remove("dark:text-white","dark:bg-gray-800","dark:border-gray-700")
+        document.body.classList.remove(
+          'dark:text-white',
+          'dark:bg-gray-800',
+          'dark:border-gray-700'
+        )
         this.isDark = false
       }
     },
@@ -32,13 +41,22 @@ export default {
     toggle() {
       if (this.isDark) {
         document.documentElement.classList.remove('dark')
-        document.body.classList.remove("dark:text-white","dark:bg-gray-800","dark:border-gray-700")
+        document.body.classList.remove(
+          'dark:text-white',
+          'dark:bg-gray-800',
+          'dark:border-gray-700'
+        )
         this.isDark = false
       } else {
         document.documentElement.classList.add('dark')
-        document.body.classList.add("dark:text-white","dark:bg-gray-800","dark:border-gray-700")
+        document.body.classList.add(
+          'dark:text-white',
+          'dark:bg-gray-800',
+          'dark:border-gray-700'
+        )
         this.isDark = true
       }
+      this.$nuxt.$emit('darkMode')
     },
   },
 }
