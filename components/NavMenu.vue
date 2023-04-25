@@ -40,6 +40,7 @@
           </a>
         </div>
         <div class="flex items-center">
+          <div class="mr-6"><DarkMode/></div>
           <div class="flex items-center ml-3">
             <div>
               <button

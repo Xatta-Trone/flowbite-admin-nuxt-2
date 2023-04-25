@@ -9,7 +9,7 @@ var myTheme = function () {
     tbody:
       'bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700',
     th: 'bg-gray-100 dark:bg-gray-700 px-4 py-4 border-r-black ',
-    td: 'px-4 py-2 divide-x',
+    td: 'px-4 py-2 divide-x text-center',
     tr: 'px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700',
     trEven: '',
     trOdd: '',
@@ -61,7 +61,7 @@ Vue.use(ClientTable, {}, false, myTheme)
 Vue.use(
   ServerTable,
   {
-    perPage: 25,
+    perPage: 20,
     perPageValues: [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     pagination: { chunk: 5 },
     orderBy: { ascending: false },
