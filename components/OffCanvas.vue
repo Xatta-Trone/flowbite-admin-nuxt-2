@@ -34,6 +34,7 @@
 
 <script>
 const BooksCreate = () => import("./Books/Create");
+const UsersCreate = () => import("./Users/Create");
 // import BooksCreate from './Books/Create';
 
 export default {
@@ -51,6 +52,7 @@ export default {
   computed: {
     chooseChildComponent() {
       if (this.component == "BooksCreate") return BooksCreate
+      if (this.component == "UsersCreate") return UsersCreate
     },
   },
 }

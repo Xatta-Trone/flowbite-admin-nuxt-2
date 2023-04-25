@@ -61,10 +61,25 @@ Vue.use(ClientTable, {}, false, myTheme)
 Vue.use(
   ServerTable,
   {
-    perPage: 20,
-    perPageValues: [5, 10, 15, 25, 50, 100],
+    perPage: 25,
+    perPageValues: [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     pagination: { chunk: 5 },
     orderBy: { ascending: false },
+    skin: 'table-hover',
+    stickyHeader: true,
+    dateColumns: ['created_at', 'updated_at'],
+    requestKeys: {
+      query: 'query',
+      limit: 'per_page',
+      orderBy: 'order_by',
+      ascending: 'order',
+      page: 'page',
+      byColumn: 'byColumn',
+    },
+    responseAdapter: function (resp) {
+      var data = this.getResponseData(resp)
+      return { data: data.data, count: data.meta.count }
+    },
     requestFunction(data) {
       return (
         this.$axios
