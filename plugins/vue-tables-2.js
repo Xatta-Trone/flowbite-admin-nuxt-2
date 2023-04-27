@@ -61,7 +61,7 @@ Vue.use(ClientTable, {}, false, myTheme)
 Vue.use(
   ServerTable,
   {
-    perPage: 20,
+    perPage: 15,
     perPageValues: [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     pagination: { chunk: 5 },
     orderBy: { ascending: false },

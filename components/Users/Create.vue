@@ -21,6 +21,7 @@
             type="button"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-hide="staticModal"
+            id="hideModalBtn"
           >
             <svg
               class="w-5 h-5"
@@ -39,73 +40,71 @@
         <!-- Modal body -->
         <div class="p-6 space-y-6">
           <div v-if="loading">Loading.....</div>
-          <form v-else action="" class="">
+          <div v-else>
             <!-- name -->
-            <div class="mb-3">
-              <label
-                for="Name"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Name</label
-              >
-              <input
-                type="text"
-                id="Name"
-                class="input-style"
-                placeholder="Xatta Trone"
-                required
-                v-model="user.name"
-              />
-              <!-- <p class="mt-2 text-sm">
-                <span class="font-medium">Well done!</span> Some success
-                message.
-              </p> -->
-            </div>
-            <!-- email -->
-            <div class="mb-3">
-              <label
-                for="email"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Email</label
-              >
-              <input
-                type="email"
-                id="email"
-                class="input-style"
-                placeholder="email@example.com"
-                required
-                v-model="user.email"
-              />
-            </div>
-
-            <!-- username -->
-            <div class="mb-3">
-              <label
-                for="Username"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Username</label
-              >
-              <input
-                type="text"
-                id="Username"
-                class="input-style"
-                placeholder="xatta-trone"
-                :required="id != 0"
-                v-model="user.username"
-              />
-              <!-- <p class="mt-2 text-sm">
-                <span class="font-medium">Well done!</span> Some success
-                message.
-              </p> -->
-            </div>
-
-            <button
-              type="submit"
-              @click.prevent=""
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            <FormulateForm
+              @submit="handleSubmit"
+              name="usersForm"
+              id="userForm"
+              :errors="inputErrors"
             >
-              {{ id == 0 ? 'Create' : 'Update' }}
-            </button>
-          </form>
+              <FormulateInput
+                type="text"
+                label="Name"
+                name="name"
+                label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                outer-class="mb-3"
+                input-class="input-style"
+                error-class="text-red-700 text-xs mb-1"
+                placeholder="Xatta Trone"
+                v-model="user.name"
+                validation="required"
+              />
+              <!-- email -->
+              <FormulateInput
+                type="email"
+                label="Email"
+                name="email"
+                label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                outer-class="mb-3"
+                input-class="input-style"
+                error-class="text-red-700 text-xs mb-1"
+                placeholder="xatta@email.com"
+                v-model="user.email"
+                validation="bail|required|email"
+              />
+              <!-- username -->
+              <FormulateInput
+                v-show="id != 0"
+                type="text"
+                label="Username"
+                name="username"
+                label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                outer-class="mb-3"
+                input-class="input-style"
+                error-class="text-red-700 text-xs mb-1"
+                placeholder="xatta-trone"
+                v-model="user.username"
+                :validation="id == 0 ? '' : 'required'"
+              />
+              <div class="flex">
+                <FormulateInput
+                  type="submit"
+                  :disabled="loading"
+                  input-class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  {{ id == 0 ? 'Create' : 'Update' }}
+                </FormulateInput>
+                <FormulateInput
+                  type="button"
+                  label="Reset"
+                  data-ghost
+                  input-class="ml-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  @click="resetFrom"
+                />
+              </div>
+            </FormulateForm>
+          </div>
         </div>
       </div>
     </div>
@@ -122,6 +121,9 @@ export default {
   data() {
     return {
       loading: false,
+      hideModalBtn: null,
+      formEl: null,
+      inputErrors: {},
       user: {
         name: '',
         email: '',
@@ -129,6 +131,17 @@ export default {
       },
     }
   },
+  mounted() {
+    const $targetEl = document.getElementById('hideModalBtn')
+    this.hideModalBtn = $targetEl
+    this.formEl = document.getElementById('userForm')
+    this.$nuxt.$on('userCreate', () => {
+      console.log('userCreate')
+      this.resetFrom()
+
+    })
+  },
+  created() {},
   methods: {
     getUserData(id) {
       let vm = this
@@ -139,18 +152,71 @@ export default {
           vm.user = res.data.data
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response)
         })
         .finally(() => {
           vm.loading = false
         })
     },
-    removeUserData() {
-      this.user = {
-        name: '',
-        email: '',
-        username: '',
-      }
+
+    handleSubmit() {
+      console.log('inside handle submit')
+      return this.id == 0 ? this.handleCreate() : this.handleUpdate()
+    },
+    resetFrom() {
+      this.$formulate.reset('usersForm')
+    },
+    resetValidation() {
+      this.$formulate.resetValidation('usersForm')
+    },
+    handleCreate() {
+      console.log('handle create')
+      let vm = this
+      vm.loading = true
+      this.$axios
+        .post('/admin/users', this.user)
+        .then((res) => {
+          console.log(res)
+          vm.$nuxt.$emit('refreshUsersTable')
+          vm.$toast.success('User created')
+          vm.inputErrors = {}
+          vm.resetFrom()
+          // vm.resetValidation()
+          vm.hideModalBtn.click()
+          return
+        })
+        .catch((err) => {
+          console.log(err)
+          vm.handleErrors(err)
+        })
+        .finally(() => {
+          vm.loading = false
+        })
+    },
+
+    handleUpdate() {
+      console.log('handle update')
+      let vm = this
+      vm.loading = true
+      this.$axios
+        .put(`/admin/users/${vm.id}`, this.user)
+        .then((res) => {
+          console.log(res)
+          vm.$nuxt.$emit('refreshUsersTable')
+          vm.$toast.success('User updated')
+          vm.inputErrors = {}
+          // vm.resetValidation()
+          vm.resetFrom()
+          vm.hideModalBtn.click()
+          return
+        })
+        .catch((err) => {
+          console.log(err)
+          vm.handleErrors(err)
+        })
+        .finally(() => {
+          vm.loading = false
+        })
     },
   },
   watch: {
@@ -159,7 +225,7 @@ export default {
       if (newVal != 0) {
         this.getUserData(newVal)
       } else {
-        this.removeUserData()
+        this.formEl.reset()
       }
     },
   },

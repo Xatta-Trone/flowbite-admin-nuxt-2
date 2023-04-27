@@ -37,13 +37,21 @@ export default {
     {
       src: '~/plugins/toast-notification.js',
     },
+
+    // {
+    //   src: '~/plugins/formulate.js',
+    // },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/google-fonts', '@nuxtjs/dotenv'],
+  buildModules: [
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/dotenv',
+    '@braid/vue-formulate/nuxt',
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

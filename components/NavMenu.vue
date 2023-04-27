@@ -63,7 +63,7 @@
             >
               <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Name
+                  Monzurul ISLAM
                 </p>
                 <p
                   class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
@@ -74,11 +74,10 @@
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a
-                    href="#"
+                  <nuxt-link to="/"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
-                    >Dashboard</a
+                    >Dashboard</nuxt-link
                   >
                 </li>
                 <li>
@@ -89,14 +88,7 @@
                     >Settings</a
                   >
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                    >Earnings</a
-                  >
-                </li>
+
                 <li>
                   <a
                     href="#"
@@ -119,7 +111,7 @@
 export default {
   created() {
     this.$nuxt.$on('darkMode', () => {
-      alert('received')
+      // alert('received')
       console.log(process.env.SERVER_URL)
     })
   },

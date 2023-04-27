@@ -18,7 +18,7 @@
         clip-rule="evenodd"
       ></path>
     </svg>
-    Delete item
+    Delete
   </button>
 </template>
 <script>
