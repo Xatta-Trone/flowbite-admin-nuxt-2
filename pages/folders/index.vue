@@ -22,14 +22,16 @@
       <!-- drawer component -->
     </div>
 
-
-
     <v-server-table
       url="/admin/folders"
       :columns="columns"
       :options="options"
       ref="usersTable"
     >
+      <div slot="visibility" slot-scope="{ row }">
+        <span v-if="row.visibility == 1" class="bg-blue-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Public</span>
+        <span v-if="row.visibility == 2" class="bg-red-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Private</span>
+      </div>
       <div slot="actions" slot-scope="{ row }">
         <!-- update button -->
         <EditButton
@@ -47,26 +49,33 @@
         />
       </div>
     </v-server-table>
-    <FoldersCreate :id="editId"  />
-    <FoldersDelete :id="editId"/>
-    <FoldersView :id="editId"/>
+    <FoldersCreate :id="editId" />
+    <FoldersDelete :id="editId" />
+    <FoldersView :id="editId" />
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      columns: ['id', 'name', 'visibility', 'user.username', 'crated_at', 'actions'],
+      columns: [
+        'id',
+        'name',
+        'visibility',
+        'user.username',
+        'crated_at',
+        'actions',
+      ],
       options: {
         headings: {
           id: '#',
+          "user.username":"Username"
         },
       },
       editId: 0,
     }
   },
-  mounted() {
-  },
+  mounted() {},
   created() {
     this.$nuxt.$on('refreshFoldersTable', () => {
       console.log('refreshFoldersTable')
@@ -80,12 +89,10 @@ export default {
   methods: {
     editHandler(id) {
       this.editId = id
-
     },
     createHandler() {
       this.editId = 0
       this.$nuxt.$emit('folderCreate')
-
     },
   },
 }

@@ -236,8 +236,12 @@ export default {
       console.log('handle update')
       let vm = this
       vm.loading = true
+      const data = {
+        name: this.modelData.name,
+        visibility: parseInt(this.modelData.visibility),
+      };
       this.$axios
-        .put(`/admin/folders/${vm.id}`, this.modelData)
+        .put(`/admin/folders/${vm.id}`, data)
         .then((res) => {
           console.log(res)
           vm.$nuxt.$emit('refreshFoldersTable')
