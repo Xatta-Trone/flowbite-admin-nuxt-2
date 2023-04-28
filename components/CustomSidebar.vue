@@ -7,7 +7,8 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
         <li>
-          <nuxt-link to="/"
+          <nuxt-link
+            to="/"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <svg
@@ -24,7 +25,8 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/users"
+          <nuxt-link
+            to="/users"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <svg
@@ -43,7 +45,32 @@
             <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
           </nuxt-link>
         </li>
-
+        <li>
+          <nuxt-link
+            to="/folders"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+           
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"
+              />
+            </svg>
+            <span class="flex-1 ml-3 whitespace-nowrap">Folders</span>
+          </nuxt-link>
+        </li>
 
         <li>
           <button
