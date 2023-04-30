@@ -92,12 +92,12 @@ export default {
       let vm = this
       vm.loading = true
       this.$axios
-        .delete(`/admin/folders/${vm.id}`)
+        .delete(`/admin/lists/${vm.id}`)
         .then((res) => {
           console.log(res)
-          vm.$nuxt.$emit('refreshFoldersTable')
-          vm.$nuxt.$emit('folderDeleted')
-          vm.$toast.success('Folder deleted')
+          vm.$nuxt.$emit('refreshListsTable')
+          vm.$nuxt.$emit('ListDeleted')
+          vm.$toast.success('List deleted')
           vm.hideModalBtn.click()
           return
         })

@@ -15,11 +15,11 @@
           class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
         >
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ data?.folder.name || 'Loading...' }}
+            {{ data?.list.name || 'Loading...' }}
             <span
-              v-if="data?.folder"
+              v-if="data?.list"
               class="bg-blue-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-              >{{ data.folder.visibility == 1 ? 'Public' : 'Private' }}</span
+              >{{ data?.list.visibility == 1 ? 'Public' : 'Private' }}</span
             >
           </h3>
           <button
@@ -44,15 +44,15 @@
           </button>
         </div>
         <!-- Modal body -->
-        <div class="p-6 space-y-6">
-          <div v-for="list in data?.lists" :key="list.id"
-            class="p-4 mb-1 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-white flex justify-between"
+        <div class="p-3 space-y-2 flex flex-row flex-wrap">
+          <div v-for="word in data?.words" :key="word.id"
+            class="p-4 mb-1 w-1/2 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-white flex justify-between"
             role="alert"
           >
-            <span class="font-medium">{{list.id}}</span> {{ list.name }}
+            <span class="font-medium">{{word.id}}</span> {{ word.word }}
             <span
               class="bg-blue-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-white"
-              >{{ list.visibility == 1 ? 'Public' : 'Private' }}</span
+              >{{ word.is_reviewed == 1 ? 'Reviewed' : 'Not Reviewed' }}</span
             >
           </div>
         </div>
@@ -60,7 +60,6 @@
         <div
           class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
         >
-
           <button
             data-modal-hide="viewModal"
             type="button"
@@ -97,7 +96,7 @@ export default {
       let vm = this
       vm.loading = true
       this.$axios
-        .get(`/admin/folders/${id}?per_page=100&order_by=asc`)
+        .get(`/admin/lists/${id}?per_page=100&order_by=asc`)
         .then((res) => {
           console.log(res.data)
           vm.data = res.data

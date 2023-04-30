@@ -87,7 +87,7 @@ export default {
         let response = await this.$auth.loginWith('local', { data: this.login })
         console.log(response)
       } catch (err) {
-        this.$toast.error(err.response.status +" | " +err.response.data.error)
+        this.$toast.error(err.response.status +" | " +err.response.data.errors)
         console.log(err.response)
       }
     },
