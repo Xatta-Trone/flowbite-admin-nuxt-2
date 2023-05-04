@@ -16,8 +16,8 @@
         <div v-else>
           <!-- name -->
           <FormulateForm
-            name="foldersForm"
-            id="folderForm"
+            name="formEl"
+            id="formId"
             :errors="inputErrors"
           >
             <FormulateInput
@@ -289,7 +289,7 @@ export default {
   mounted() {
     const $targetEl = document.getElementById('hideModalBtn')
     this.hideModalBtn = $targetEl
-    this.formEl = document.getElementById('folderForm')
+    this.formEl = document.getElementById('formId')
 
     this.getData(this.$nuxt.$route.params.id)
   },
@@ -317,10 +317,10 @@ export default {
       return this.id == 0 ? this.handleCreate() : this.handleUpdate()
     },
     resetFrom() {
-      this.$formulate.reset('foldersForm')
+      this.$formulate.reset('formEl')
     },
     resetValidation() {
-      this.$formulate.resetValidation('foldersForm')
+      this.$formulate.resetValidation('formEl')
     },
     handleCreate() {
       console.log('handle create')
@@ -357,15 +357,15 @@ export default {
       let vm = this
       vm.loading = true
       const data = {
-        name: this.modelData.name,
-        visibility: parseInt(this.modelData.visibility),
+        word_data: this.modelData.word_data,
+        is_reviewed: parseInt(this.modelData.is_reviewed),
       }
       this.$axios
-        .put(`/admin/folders/${vm.id}`, data)
+        .put(`/admin/words/${vm.modelData.id}`, data)
         .then((res) => {
           console.log(res)
-          vm.$nuxt.$emit('refreshFoldersTable')
-          vm.$toast.success('Folder updated')
+          vm.$nuxt.$emit('refreshWordsTable')
+          vm.$toast.success('Word updated')
           vm.inputErrors = {}
           // vm.resetValidation()
           vm.resetFrom()

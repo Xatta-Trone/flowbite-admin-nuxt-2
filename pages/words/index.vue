@@ -38,19 +38,17 @@
           :clickHandler="() => editHandler(row.id)"
         />
         <!-- delete button -->
-        <!-- <DeleteButton
+        <DeleteButton
           target="deleteModal"
-          :clickHandler="() => editHandler(row.id)"
-        /> -->
+          :clickHandler="() => deleteHandler(row.id)"
+        />
         <!-- <ViewButton
           target="viewModal"
           :clickHandler="() => editHandler(row.id)"
         /> -->
       </div>
     </v-server-table>
-    <!-- <WordsCreate :id="editId" />
-    <WordsDelete :id="editId" />
-    <WordsView :id="editId" /> -->
+    <WordsDelete :id="deleteId" />
   </div>
 </template>
 <script>
@@ -71,6 +69,7 @@ export default {
         },
       },
       editId: 0,
+      deleteId: 0,
     }
   },
   mounted() {},
@@ -79,9 +78,10 @@ export default {
       console.log('refreshWordsTable')
       this.$refs.usersTable.refresh()
     })
-    this.$nuxt.$on('listDeleted', () => {
-      console.log('listDeleted')
-      this.editId = 0
+    this.$nuxt.$on('wordDeleted', () => {
+      console.log('wordDeleted')
+      this.deleteId = 0
+      this.$refs.usersTable.refresh()
     })
   },
   methods: {
@@ -90,7 +90,10 @@ export default {
     },
     createHandler() {
       this.editId = 0
-      this.$nuxt.$emit('listCreate')
+      this.$nuxt.$emit('wordCreate')
+    },
+    deleteHandler(id) {
+      this.deleteId = id
     },
   },
 }

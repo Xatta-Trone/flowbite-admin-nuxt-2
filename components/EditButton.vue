@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <button
       v-if="target != 'default'"
       type="button"
@@ -48,7 +48,7 @@
       </svg>
       Update
     </button>
-  </div>
+  </span>
 </template>
 <script>
 export default {
