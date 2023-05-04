@@ -42,13 +42,14 @@
           target="deleteModal"
           :clickHandler="() => deleteHandler(row.id)"
         />
-        <!-- <ViewButton
+        <ViewButton
           target="viewModal"
-          :clickHandler="() => editHandler(row.id)"
-        /> -->
+          :clickHandler="() => viewHandler(row.id)"
+        />
       </div>
     </v-server-table>
     <WordsDelete :id="deleteId" />
+    <WordsView :id="viewId" />
   </div>
 </template>
 <script>
@@ -70,6 +71,7 @@ export default {
       },
       editId: 0,
       deleteId: 0,
+      viewId: 0,
     }
   },
   mounted() {},
@@ -94,6 +96,9 @@ export default {
     },
     deleteHandler(id) {
       this.deleteId = id
+    },
+    viewHandler(id) {
+      this.viewId = id
     },
   },
 }

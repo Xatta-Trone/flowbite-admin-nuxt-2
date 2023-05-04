@@ -15,11 +15,11 @@
           class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
         >
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ data?.folder.name || 'Loading...' }}
+            {{ data?.word || 'Loading...' }}
             <span
-              v-if="data?.folder"
+              v-if="data"
               class="bg-blue-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-              >{{ data.folder.visibility == 1 ? 'Public' : 'Private' }}</span
+              >{{ data.is_reviewed == 1 ? 'Reviewed' : 'Not reviewed' }}</span
             >
           </h3>
           <button
@@ -45,22 +45,37 @@
         </div>
         <!-- Modal body -->
         <div class="p-6 space-y-6">
-          <div v-for="list in data?.lists" :key="list.id"
-            class="p-4 mb-1 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-white flex justify-between"
+          <div
+            v-for="(pos, i) in data?.word_data.partsOfSpeeches"
+            :key="i"
+            class="p-4 mb-1 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-white"
             role="alert"
           >
-            <span class="font-medium">{{list.id}}</span> {{ list.name }}
-            <span
-              class="bg-blue-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-white"
-              >{{ list.visibility == 1 ? 'Public' : 'Private' }}</span
-            >
+            <span class="font-medium">{{ pos.partsOfSpeech }}</span>
+            <!-- definitions -->
+            <div class="font-medium">Definition</div>
+            <div v-for="(def, j) in pos.definitions" :key="`def-` + j">
+              {{ def }}
+            </div>
+            <!-- examples -->
+            <div class="font-medium">Examples</div>
+            <div v-for="(ex, j) in pos.examples" :key="`ex-` + j">
+              {{ ex }}
+            </div>
+            <div class="font-medium">Gre words</div>
+            <div class="break-words">
+              {{ pos.synonyms_gre.join(",") }}
+            </div>
+            <div class="font-medium">Non Gre words</div>
+            <div class="break-words">
+              {{ pos?.synonyms_normal?.join(",") }}
+            </div>
           </div>
         </div>
         <!-- Modal footer -->
         <div
           class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
         >
-
           <button
             data-modal-hide="viewModal"
             type="button"
@@ -97,12 +112,13 @@ export default {
       let vm = this
       vm.loading = true
       this.$axios
-        .get(`/admin/folders/${id}?per_page=100&order_by=asc`)
+        .get(`/admin/words/${id}?per_page=100&order_by=asc`)
         .then((res) => {
           console.log(res.data)
-          vm.data = res.data
+          vm.data = res.data.data
         })
         .catch((err) => {
+          vm.data = null
           console.log(err.response)
         })
         .finally(() => {
