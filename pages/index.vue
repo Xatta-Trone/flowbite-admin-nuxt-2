@@ -1,5 +1,5 @@
 <template>
   <div>
-    Hello
+    Hello Admin
   </div>
 </template>
