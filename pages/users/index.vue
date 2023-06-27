@@ -1,9 +1,7 @@
 <template>
   <div class="">
     <div class="flex justify-between mb-3">
-      <h1
-        class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
-      >
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
         Users
       </h1>
 
@@ -11,37 +9,28 @@
       <div class="text-center">
         <button
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          type="button"
-          data-modal-target="staticModal"
-          data-modal-toggle="staticModal"
-          @click="createHandler"
-        >
+          type="button" data-modal-target="staticModal" data-modal-toggle="staticModal" @click="createHandler">
           Add new
         </button>
       </div>
       <!-- drawer component -->
     </div>
 
-    <UsersCreate :id="editId"  />
-    <UsersDelete :id="editId"/>
+    <UsersCreate :id="editId" />
+    <UsersDelete :id="editId" />
 
-    <v-server-table
-      url="/admin/users"
-      :columns="columns"
-      :options="options"
-      ref="usersTable"
-    >
+    <v-server-table url="/admin/users" :columns="columns" :options="options" ref="usersTable">
+      <div slot="name" slot-scope="{ row }">
+        {{ row.name }}
+        <span v-if="isPremium(row.expires_on)"
+          class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Prmium</span>
+
+      </div>
       <div slot="actions" slot-scope="{ row }">
         <!-- update button -->
-        <EditButton
-          target="staticModal"
-          :clickHandler="() => editHandler(row.id)"
-        />
+        <EditButton target="staticModal" :clickHandler="() => editHandler(row.id)" />
         <!-- delete button -->
-        <DeleteButton
-          target="deleteModal"
-          :clickHandler="() => editHandler(row.id)"
-        />
+        <DeleteButton target="deleteModal" :clickHandler="() => editHandler(row.id)" />
       </div>
     </v-server-table>
   </div>
@@ -74,7 +63,7 @@ export default {
     this.$nuxt.$on('vue-tables.loading', () => {
       this.loading = true
     })
-     this.$nuxt.$on('vue-tables.loading', () => {
+    this.$nuxt.$on('vue-tables.loading', () => {
       this.loading = false
     })
   },
@@ -88,6 +77,23 @@ export default {
       this.$nuxt.$emit('userCreate')
 
     },
+    isPremium(date = null) {
+      if (date == null) {
+        return false
+      }
+
+      const d = new Date(date)
+      const today = new Date()
+
+      if (today.getTime() > d.getTime()) {
+        return false
+
+      }
+
+      return true
+
+
+    }
   },
 }
 </script>

@@ -28,5 +28,5 @@ jobs:
           sudo git pull origin staging
           sudo npm ci --force
           sudo npm run generate
-          sudo rm -rf node_modules
+          #sudo rm -rf node_modules
 

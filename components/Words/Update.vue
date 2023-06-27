@@ -3,250 +3,140 @@
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <!-- Modal header -->
-      <div
-        class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
-      >
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-          {{ `Update  #${modelData.id}` }}
-        </h3>
-      </div>
-      <!-- Modal body -->
-      <div class="p-6 space-y-6">
-        <div v-if="loading">Loading.....</div>
-        <div v-else>
-          <!-- name -->
-          <FormulateForm
-            name="formEl"
-            id="formId"
-            :errors="inputErrors"
-          >
-            <FormulateInput
-              type="text"
-              label="Word"
-              name="word"
-              label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              outer-class="mb-3"
-              input-class="input-style"
-              error-class="text-red-700 text-xs mb-1"
-              placeholder="Xatta Trone"
-              v-model="modelData.word"
-              validation="required"
-            />
-            <FormulateInput
-              v-model="modelData.is_reviewed"
-              :options="{
+        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            {{ `Update #${modelData.id}` }}
+          </h3>
+        </div>
+        <!-- Modal body -->
+        <div class="p-6 space-y-6">
+          <div v-if="loading">Loading.....</div>
+          <div v-else>
+            <!-- name -->
+            <FormulateForm name="formEl" id="formId" :errors="inputErrors">
+              <FormulateInput type="text" label="Word" name="word"
+                label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" outer-class="mb-3"
+                input-class="input-style" error-class="text-red-700 text-xs mb-1" placeholder="Xatta Trone"
+                v-model="modelData.word" validation="required" />
+              <FormulateInput v-model="modelData.is_reviewed" :options="{
                 1: 'True',
                 0: 'False',
-              }"
-              type="select"
-              name="is_reviewed"
-              placeholder="Select is_reviewed"
-              label="Is Reviewed"
-              validation="required|number"
-              label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              outer-class="mb-3"
-              input-class="input-style"
-              error-class="text-red-700 text-xs mb-1"
-            />
+              }" type="select" name="is_reviewed" placeholder="Select is_reviewed" label="Is Reviewed"
+                validation="required|number" label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                outer-class="mb-3" input-class="input-style" error-class="text-red-700 text-xs mb-1" />
 
-            <div v-show="modelData">
-              <div
-                v-for="(pos, i) in modelData?.word_data?.partsOfSpeeches"
-                :key="i"
-                class="w-full p-6 my-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-              >
-                <FormulateInput
-                  v-model="pos.partsOfSpeech"
-                  :options="{
+              <div v-show="modelData">
+                <div v-for="(pos, i) in modelData?.word_data?.partsOfSpeeches" :key="i"
+                  class="w-full p-6 my-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                  <FormulateInput v-model="pos.partsOfSpeech" :options="{
                     noun: 'Noun',
                     verb: 'verb',
                     adjective: 'adjective',
                     adverb: 'adverb',
-                  }"
-                  type="select"
-                  name="partsOfSpeech"
-                  placeholder="Select partsOfSpeech"
-                  label="partsOfSpeech"
-                  validation="required"
-                  label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  outer-class="mb-3"
-                  input-class="input-style"
-                  error-class="text-red-700 text-xs mb-1"
-                />
+                  }" type="select" name="partsOfSpeech" placeholder="Select partsOfSpeech" label="partsOfSpeech"
+                    validation="required" label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    outer-class="mb-3" input-class="input-style" error-class="text-red-700 text-xs mb-1" />
 
-                <div v-for="(def, j) in pos.definitions" :key="'def' + j">
-                  <FormulateInput
-                    type="text"
-                    label="Definition"
-                    name="definition"
-                    label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    outer-class="mb-3"
-                    input-class="input-style"
-                    error-class="text-red-700 text-xs mb-1"
-                    placeholder="Xatta Trone"
-                    v-model="pos.definitions[j]"
-                    validation="required"
-                  />
-                </div>
+                  <div v-for="(def, j) in pos.definitions" :key="'def' + j">
+                    <FormulateInput type="text" label="Definition" name="definition"
+                      label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" outer-class="mb-3"
+                      input-class="input-style" error-class="text-red-700 text-xs mb-1" placeholder="Xatta Trone"
+                      v-model="pos.definitions[j]" validation="required" />
+                  </div>
 
-                <div v-for="(ex, k) in pos.examples" :key="'example-' + k">
-                  <FormulateInput
-                    type="text"
-                    label="Example"
-                    name="example"
-                    label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    outer-class="mb-3"
-                    input-class="input-style"
-                    error-class="text-red-700 text-xs mb-1"
-                    placeholder="Xatta Trone"
-                    v-model="pos.examples[k]"
-                    validation="required"
-                  />
-                </div>
+                  <div v-for="(ex, k) in pos.examples" :key="'example-' + k">
+                    <FormulateInput type="text" label="Example" name="example"
+                      label-class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" outer-class="mb-3"
+                      input-class="input-style" error-class="text-red-700 text-xs mb-1" placeholder="Xatta Trone"
+                      v-model="pos.examples[k]" validation="required" />
+                  </div>
 
-                <div>
-                  <p
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    GRE words ({{ pos.synonyms_gre.length }})
-                  </p>
-                  <label
-                    for="gre"
-                    class="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
-                    >Add new gre word</label
-                  >
-                  <input
-                    type="text"
-                    class="input-style"
-                    name="gre"
-                    v-model="greNew"
-                    @keyup.prevent.enter="addGreWord(i)"
-                  />
+                  <div>
+                    <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      GRE words ({{ pos.synonyms_gre.length }})
+                    </p>
+                    <label for="gre" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Add new gre
+                      word</label>
+                    <input type="text" class="input-style" name="gre" v-model="greNew"
+                      @keyup.prevent.enter="addGreWord(i)" />
 
-                  <div class="block mt-4">
-                    <span
-                      v-for="(word, z) in pos.synonyms_gre"
-                      :key="'gre-' + z"
-                      class="bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-                      >{{ word }}
-                      <span
-                        style="cursor: pointer"
-                        @click.prevent="removeGreWords(i, z)"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="inline-block"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          stroke-width="2"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path
-                            stroke="none"
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          ></path>
-                          <path
-                            d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
-                          ></path>
-                          <path d="M10 10l4 4m0 -4l-4 4"></path>
-                        </svg>
+                    <div class="block mt-4">
+                      <span v-for="(word, z) in pos.synonyms_gre" :key="'gre-' + z"
+                        class="bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{
+                          word }}
+                        <span style="cursor: pointer" @click.prevent="removeGreWords(i, z)">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z">
+                            </path>
+                            <path d="M10 10l4 4m0 -4l-4 4"></path>
+                          </svg>
+                        </span>
                       </span>
-                    </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4">
+                      Non GRE words ({{ pos.synonyms_normal.length }})
+                    </p>
+                    <label for="NotGreNew" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Add new non
+                      gre word</label>
+                    <input type="text" class="input-style" name="NotGreNew" v-model="NotGreNew"
+                      @keyup.prevent.enter="addNonGreWord(i)" />
+
+                    <div class="block mt-4">
+                      <span v-for="(word, z) in pos.synonyms_normal" :key="'gre-normal-' + z"
+                        class="bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 mb-1 rounded dark:bg-blue-900 dark:text-blue-300">{{
+                          word }}
+                        <span style="cursor: pointer" @click.prevent="removeNonGreWords(i, z)">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z">
+                            </path>
+                            <path d="M10 10l4 4m0 -4l-4 4"></path>
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <button type="button" @click="removePos(i)"
+                      class="float-right text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                      Remove
+                    </button>
                   </div>
                 </div>
 
                 <div>
-                  <p
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4"
-                  >
-                    Non GRE words ({{ pos.synonyms_normal.length }})
-                  </p>
-                  <label
-                    for="NotGreNew"
-                    class="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
-                    >Add new non gre word</label
-                  >
-                  <input
-                    type="text"
-                    class="input-style"
-                    name="NotGreNew"
-                    v-model="NotGreNew"
-                    @keyup.prevent.enter="addNonGreWord(i)"
-                  />
-
-                  <div class="block mt-4">
-                    <span
-                      v-for="(word, z) in pos.synonyms_normal"
-                      :key="'gre-normal-' + z"
-                      class="bg-blue-100 text-blue-800 text-md font-medium mr-2 px-2.5 py-0.5 mb-1 rounded dark:bg-blue-900 dark:text-blue-300"
-                      >{{ word }}
-                      <span
-                        style="cursor: pointer"
-                        @click.prevent="removeNonGreWords(i, z)"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="inline-block"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          stroke-width="2"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path
-                            stroke="none"
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          ></path>
-                          <path
-                            d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
-                          ></path>
-                          <path d="M10 10l4 4m0 -4l-4 4"></path>
-                        </svg>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <div class="block">
-                  <button
-                    type="button"
-                    @click="removePos(i)"
-                    class="float-right text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-                  >
-                    Remove
+                  <button type="button" @click="addPos"
+                    class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Add new PoS
                   </button>
                 </div>
               </div>
 
-              <div>
-                <button
-                  type="button"
-                  @click="addPos"
-                  class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                >
-                  Add new PoS
-                </button>
+              <div class="flex mt-4">
+                <FormulateInput type="button" @click.prevent="handleSubmit" :disabled="loading"
+                  input-class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Update
+                </FormulateInput>
               </div>
-            </div>
 
-            <div class="flex mt-4">
-              <FormulateInput
-                type="button"
-                @click.prevent="handleSubmit"
-                :disabled="loading"
-                input-class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Update
-              </FormulateInput>
-            </div>
+              <div class="inline-flex rounded-md shadow-sm mt-6" role="group">
+                <nuxt-link
+                  class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                  :to="`/words/edit/${parseInt($nuxt.$route.params.id) - 1}`">Previous word</nuxt-link>
+
+                <nuxt-link
+                  class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                  :to="`/words/edit/${parseInt($nuxt.$route.params.id) +1 }`">Next word</nuxt-link>
+              </div>
+
           </FormulateForm>
         </div>
       </div>
@@ -293,7 +183,7 @@ export default {
 
     this.getData(this.$nuxt.$route.params.id)
   },
-  created() {},
+  created() { },
   methods: {
     getData(id) {
       let vm = this
@@ -364,12 +254,12 @@ export default {
         .put(`/admin/words/${vm.modelData.id}`, data)
         .then((res) => {
           console.log(res)
-          vm.$nuxt.$emit('refreshWordsTable')
+          // vm.$nuxt.$emit('refreshWordsTable')
           vm.$toast.success('Word updated')
           vm.inputErrors = {}
           // vm.resetValidation()
-          vm.resetFrom()
-          vm.hideModalBtn.click()
+          // vm.resetFrom()
+          // vm.hideModalBtn.click()
           return
         })
         .catch((err) => {
@@ -379,6 +269,10 @@ export default {
         .finally(() => {
           vm.loading = false
         })
+    },
+    nextWord() {
+      const currentId = parseInt(this.$nuxt.$route.params.id)
+      this.$router.push(`/words/edit/${currentId - 1}`)
     },
     removeGreWords(posI, itemI) {
       this.modelData.word_data.partsOfSpeeches[posI].synonyms_gre.splice(
