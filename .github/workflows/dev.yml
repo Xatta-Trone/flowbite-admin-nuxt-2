@@ -25,7 +25,7 @@ jobs:
         script: |
           cd /var/www/wc-admin-dev
           sudo git checkout staging
-          sudo git pull origin staging
+          sudo git pull origin staging --rebase
           sudo npm ci --force
           sudo npm run generate
           #sudo rm -rf node_modules
