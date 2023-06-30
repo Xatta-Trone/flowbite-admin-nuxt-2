@@ -25,6 +25,8 @@ jobs:
         script: |
           cd /var/www/wc-admin-dev
           sudo git checkout staging
+          sudo git add .
+          sudo git commit -m "fix"
           sudo git pull origin staging --rebase
           sudo npm ci --force
           sudo npm run generate
